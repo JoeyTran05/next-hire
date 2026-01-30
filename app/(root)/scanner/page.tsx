@@ -294,7 +294,7 @@ const Scanner = () => {
 											data-invalid={fieldState.invalid}
 										>
 											<div
-												className={`bg-white rounded-2xl shadow-xl p-8 border border-cyan-100 transition-all cursor-pointer ${
+												className={`bg-white rounded-2xl shadow-xl p-8 border-dashed border-4 border-cyan-100 transition-all cursor-pointer ${
 													isDragging
 														? "border-teal-500 bg-teal-50"
 														: "border-gray-300 hover:border-teal-400 hover:bg-teal-50"
