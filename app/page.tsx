@@ -14,10 +14,56 @@ import {
 	CardHeader,
 	CardTitle,
 } from "@/components/ui/card";
-import { Upload, PenTool, Mic, Star } from "lucide-react";
+import { Upload, PenTool, Mic, Star, BookOpenText } from "lucide-react";
 import Link from "next/link";
 import { reviews } from "@/constants/user-reviews";
 import Image from "next/image";
+import FeatureCard from "@/components/FeatureCard";
+
+const features = [
+	{
+		id: 1,
+		icon: Upload,
+		title: "Resume Scanner",
+		description: "Upload your PDF resume and get instant AI-powered feedbacks",
+		highlight: true
+	},
+	{
+		id: 2,
+		icon: PenTool,
+		title: "Resume Writing Help",
+		description: "Get professional guidance and tips to write an outstanding resume",
+		highlight: true
+	},
+	{
+		id: 3,
+		icon: Mic,
+		title: "Interview Practice",
+		description: "Practice your interview skills with AI-generated questions and feedback",
+		highlight: true
+	},
+	{
+		id: 4,
+		icon: BookOpenText,
+		title: "100+ Resume Templates",
+		description: "Choose from a variety of modern and ATS-friendly resume templates",
+		highlight: false
+	},
+	{
+		id: 5,
+		icon: BookOpenText,
+		title: "100+ Resume Templates",
+		description: "Choose from a variety of modern and ATS-friendly resume templates",
+		highlight: false
+	},
+	{
+		id: 6,
+		icon: BookOpenText,
+		title: "100+ Resume Templates",
+		description: "Choose from a variety of modern and ATS-friendly resume templates",
+		highlight: false
+	}
+]
 
 const Home = () => {
 	return (
@@ -66,197 +112,23 @@ const Home = () => {
 				</div>
 
 				{/* Feature Cards Section */}
-				<div className="flex gap-8 mt-15 w-4/5 mx-auto">
-					{/* AI Resume Scanner */}
-					<Card className="group border border-sky-200/50 shadow-[0_10px_30px_rgba(56,189,248,0.15)] flex flex-col justify-between w-1/3 transition-all duration-300 hover:scale-110 hover:shadow-[0_20px_50px_rgba(56,189,248,0.35)] hover:border-sky-300/70 hover:-translate-y-2">
-						<CardHeader>
-							<CardTitle className="flex flex-col items-start gap-4">
-								<div className="p-4 bg-linear-to-br from-cyan-400 to-sky-500 rounded-2xl transition-transform duration-300 group-hover:scale-110">
-									<Upload className="w-10 h-10 text-white" />
-								</div>
-								<h3 className="text-2xl font-bold">
-									Resume Scanner
-								</h3>
-							</CardTitle>
-						</CardHeader>
+				<h1 className="text-center text-4xl font-bold mt-15 animate-bounce">
+					Why NextHire?
+				</h1>
+				<p className="text-gray-600 text-center mt-4 text-xl">Tools designed to help you master every interview with AI</p>
 
-						<CardContent>
-							<p className="text-1xl text-gray-500 font-semibold">
-								Upload your PDF resume and get instant
-								AI-powered feedbacks
-							</p>
-						</CardContent>
-
-						<CardFooter>
-							<Link
-								href="/scanner"
-								className="text-2xl text-blue-500 font-medium transition-transform duration-300 group-hover:translate-x-2"
-							>
-								Get Started →
-							</Link>
-						</CardFooter>
-					</Card>
-
-					{/* Resume Writer */}
-					<Card className="group border border-sky-200/50 shadow-[0_10px_30px_rgba(56,189,248,0.15)] flex flex-col justify-between w-1/3 transition-all duration-300 hover:scale-110 hover:shadow-[0_20px_50px_rgba(56,189,248,0.35)] hover:border-sky-300/70 hover:-translate-y-2">
-						<CardHeader>
-							<CardTitle className="flex flex-col items-start gap-4">
-								<div className="p-4 bg-linear-to-br from-sky-400 to-purple-500 rounded-2xl transition-transform duration-300 group-hover:scale-110">
-									<PenTool className="w-10 h-10 text-white" />
-								</div>
-								<h3 className="text-2xl font-bold">
-									Resume Writing Help
-								</h3>
-							</CardTitle>
-						</CardHeader>
-
-						<CardContent>
-							<p className="text-1xl text-gray-500 font-semibold">
-								Get professional guidance and tips to write an
-								outstanding resume
-							</p>
-						</CardContent>
-
-						<CardFooter>
-							<Link
-								href="/writer"
-								className="text-2xl text-blue-500 font-medium transition-transform duration-300 group-hover:translate-x-2"
-							>
-								Get Started →
-							</Link>
-						</CardFooter>
-					</Card>
-
-					{/* Interview Practice */}
-					<Card className="group border border-sky-200/50 shadow-[0_10px_30px_rgba(56,189,248,0.15)] flex flex-col justify-between w-1/3 transition-all duration-300 hover:scale-110 hover:shadow-[0_20px_50px_rgba(56,189,248,0.35)] hover:border-sky-300/70 hover:-translate-y-2">
-						<CardHeader>
-							<CardTitle className="flex flex-col items-start	gap-4">
-								<div className="p-4 bg-linear-to-br from-violet-400 to-purple-500 rounded-2xl transition-transform duration-300 group-hover:scale-110">
-									<Mic className="w-10 h-10 text-white" />
-								</div>
-								<h3 className="text-2xl font-bold">
-									Interview Practice
-								</h3>
-							</CardTitle>
-						</CardHeader>
-
-						<CardContent>
-							<p className="text-1xl text-gray-500 font-semibold">
-								Practice your interview skills with AI-generated
-								questions and feedback
-							</p>
-						</CardContent>
-
-						<CardFooter>
-							<Link
-								href="/interview"
-								className="text-2xl text-blue-500 font-medium transition-transform duration-300 group-hover:translate-x-2"
-							>
-								Get Started →
-							</Link>
-						</CardFooter>
-					</Card>
+				<div className="grid grid-cols-3 gap-8 mt-10 w-4/5 mx-auto">
+					{features.map(feature => (
+						<FeatureCard key={feature.id} 
+									 icon={feature.icon}
+									 title={feature.title}
+									 description={feature.description}
+									 highlight={feature.highlight}
+									  />
+					))}
+					
 				</div>
 
-				{/* Carousel Section */}
-				<div className="mt-15 w-4/5 mx-auto">
-					<Carousel className="w-full">
-						<CarouselContent className="-ml-4">
-							<CarouselItem className="pl-4 py-8">
-								<div className="p-2">
-									<Card className="border-sky-200/50 shadow-[0_10px_30px_rgba(56,189,248,0.15)] p-12 rounded-2xl">
-										<h2 className="text-center text-4xl font-bold mb-8">
-											Why Choose Our Platform?
-										</h2>
-
-										<div className="flex justify-evenly">
-											<div className="flex items-start gap-3 bg-blue-50 p-6 rounded-3xl w-1/3">
-												<div className="mt-1 shrink-0 w-6 h-6 rounded-full bg-green-500 flex items-center justify-center">
-													<span className="text-white text-sm">
-														✓
-													</span>
-												</div>
-												<div>
-													<h3 className="text-xl font-bold mb-2">
-														Smart AI Analysis
-													</h3>
-													<p className="text-gray-500">
-														Get instant AI-powered
-														feedback on your resume
-													</p>
-												</div>
-											</div>
-											<div className="flex items-start gap-3 bg-blue-50 p-6 rounded-3xl w-1/3">
-												<div className="mt-1 shrink-0 w-6 h-6 rounded-full bg-green-500 flex items-center justify-center">
-													<span className="text-white text-sm">
-														✓
-													</span>
-												</div>
-												<div>
-													<h3 className="text-xl font-bold mb-2">
-														95% Success Rate
-													</h3>
-													<p className="text-gray-500">
-														Proven increase in
-														interview callbacks
-													</p>
-												</div>
-											</div>
-										</div>
-									</Card>
-								</div>
-							</CarouselItem>
-
-							<CarouselItem className="pl-4 py-8">
-								<div className="p-2">
-									<Card className="border-sky-200/50 shadow-[0_10px_30px_rgba(56,189,248,0.15)] p-12 rounded-2xl">
-										<h2 className="text-center text-4xl font-bold mb-8">
-											Why Choose Our Platform?
-										</h2>
-
-										<div className="flex justify-evenly">
-											<div className="flex items-start gap-3 bg-blue-50 p-6 rounded-3xl w-1/3">
-												<div className="mt-1 shrink-0 w-6 h-6 rounded-full bg-green-500 flex items-center justify-center">
-													<span className="text-white text-sm">
-														✓
-													</span>
-												</div>
-												<div>
-													<h3 className="text-xl font-bold mb-2">
-														Interview Practice
-													</h3>
-													<p className="text-gray-500">
-														AI-generated questions
-														with real-time feedback
-													</p>
-												</div>
-											</div>
-											<div className="flex items-start gap-3 bg-blue-50 p-6 rounded-3xl w-1/3">
-												<div className="mt-1 shrink-0 w-6 h-6 rounded-full bg-green-500 flex items-center justify-center">
-													<span className="text-white text-sm">
-														✓
-													</span>
-												</div>
-												<div>
-													<h3 className="text-xl font-bold mb-2">
-														ATS-Friendly Templates
-													</h3>
-													<p className="text-gray-500">
-														Professional templates
-														optimized for applicant
-														tracking systems
-													</p>
-												</div>
-											</div>
-										</div>
-									</Card>
-								</div>
-							</CarouselItem>
-						</CarouselContent>
-						<CarouselPrevious />
-						<CarouselNext />
-					</Carousel>
-				</div>
 
 				{/* User Reviews Section */}
 				<div className="mt-15 mb-7">
