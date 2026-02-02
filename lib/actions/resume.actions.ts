@@ -3,9 +3,15 @@
 import { auth } from "@clerk/nextjs/server";
 import { createSupabaseClient } from "../supabase";
 import { randomUUID } from "crypto";
+import { supabaseAdmin } from "../supabase/admin";
 
 export const uploadResumeToSupabase = async (file: File): Promise<string> => {
-	const supabase = createSupabaseClient();
+	if (file.type !== "application/pdf") {
+		throw new Error(
+			"Only PDF files are allowed. Detected MIME type: " + file.type,
+		);
+	}
+
 	const { userId: author } = await auth();
 
 	const arrayBuffer = await file.arrayBuffer();
@@ -13,18 +19,19 @@ export const uploadResumeToSupabase = async (file: File): Promise<string> => {
 
 	const filePath = `resumes/${author}/${randomUUID()}.pdf`;
 
-	const { data, error } = await supabase.storage
+	const { data, error } = await supabaseAdmin.storage
 		.from("resumes")
 		.upload(filePath, buffer, {
 			cacheControl: "3600",
 			upsert: false,
+			contentType: "application/pdf",
 		});
 
 	if (error) {
 		throw new Error(`Failed to upload file: ${error.message}`);
 	}
 
-	const { data: publicUrlData } = supabase.storage
+	const { data: publicUrlData } = supabaseAdmin.storage
 		.from("resumes")
 		.getPublicUrl(data.path);
 
@@ -46,7 +53,14 @@ export const createResume = async (formData: CreateResume) => {
 
 	const { data, error } = await supabase
 		.from("resumes")
-		.insert({ ...formData, author, resumeUrl: publicUrl });
+		.insert({
+			user_id: author,
+			job_title: formData.jobTitle,
+			company_name: formData.companyName,
+			job_description: formData.jobDescription,
+			resume: publicUrl,
+		})
+		.select();
 
 	if (error || !data) {
 		throw new Error(
