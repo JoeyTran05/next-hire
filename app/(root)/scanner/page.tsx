@@ -38,7 +38,7 @@ const formSchema = z.object({
 	jobDescription: z
 		.string()
 		.min(20, "Description must be at least 20 characters.")
-		.max(100, "Description must be at most 100 characters."),
+		.max(1000, "Description must be at most 100 characters."),
 	resume: z
 		.instanceof(File, { message: "Resume is not uploaded." })
 		.refine((file) => file && file.size <= 5 * 1024 * 1024, {
@@ -65,11 +65,11 @@ const Scanner = () => {
 		toast("Resume submitted successfully!");
 		setIsAnalyzing(true);
 
-		const resume_text = await analyzeResume(data);
+		const resumeFeedbackId = await analyzeResume(data);
 
-		if (resume_text) {
+		if (resumeFeedbackId) {
 			router.push("/scanner/result");
-			console.log("Resume analyzed:", resume_text);
+			console.log("Resume analyzed:", resumeFeedbackId);
 		} else {
 			console.log("Failed to analyze resume");
 			router.push("/");

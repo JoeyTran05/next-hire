@@ -44,17 +44,21 @@ export const insertResume = async (
 ) => {
 	const supabase = createSupabaseClient();
 
-	const { error } = await supabase.from("resumes").insert({
-		user_id: author,
-		job_title: formData.jobTitle,
-		company_name: formData.companyName,
-		job_description: formData.jobDescription,
-		resume: publicUrl,
-	});
+	const { data, error } = await supabase
+		.from("resumes")
+		.insert({
+			user_id: author,
+			job_title: formData.jobTitle,
+			company_name: formData.companyName,
+			job_description: formData.jobDescription,
+			resume: publicUrl,
+		})
+		.select();
 
 	if (error) {
 		throw new Error(`Failed to insert resume record: ${error.message}`);
 	}
+	return data[0].id;
 };
 
 export const analyzeResume = async (formData: CreateResume) => {
@@ -71,7 +75,7 @@ export const analyzeResume = async (formData: CreateResume) => {
 	const buffer = Buffer.from(arrayBuffer);
 
 	const publicUrl = await uploadResumeToSupabase(buffer, author!);
-	insertResume(formData, author!, publicUrl);
+	const resumeId = await insertResume(formData, author!, publicUrl);
 
 	const resumeText = await convertPdfToText(publicUrl);
 	const resumeFeedback = await generateAnalysis(
@@ -80,6 +84,48 @@ export const analyzeResume = async (formData: CreateResume) => {
 		formData.companyName,
 		resumeText,
 	);
-	console.log("Resume feedback:", resumeFeedback);
-	return resumeFeedback;
+	const resumeFeedbackId = await insertResumeFeedback({
+		...resumeFeedback,
+		resume_id: resumeId,
+	});
+	return resumeFeedbackId;
+};
+
+export const insertResumeFeedback = async ({
+	overall_score,
+	ats_score,
+	keyword_match_score,
+	impact_score,
+	readability_score,
+	relevance_score,
+	consistency_score,
+	summary_feedback,
+	section_feedback,
+	resume_id,
+}: ResumeFeedbackParams) => {
+	const supabase = createSupabaseClient();
+
+	const { data, error } = await supabase
+		.from("resume_results")
+		.insert({
+			overall_score,
+			ats_score,
+			keyword_match_score,
+			impact_score,
+			readability_score,
+			relevance_score,
+			consistency_score,
+			summary_feedback,
+			section_feedback,
+			resume_id,
+		})
+		.select();
+
+	if (error || !data) {
+		throw new Error(
+			`Failed to insert resume feedback: ${error?.message || "No data returned"}`,
+		);
+	}
+
+	return data[0].id;
 };
