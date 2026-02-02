@@ -24,7 +24,7 @@ import { toast } from "sonner";
 import { Briefcase, Building2, FileSearchCorner, Upload } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
-import { createResume } from "@/lib/actions/resume.actions";
+import { analyzeResume } from "@/lib/actions/resume.actions";
 
 const formSchema = z.object({
 	jobTitle: z
@@ -65,13 +65,13 @@ const Scanner = () => {
 		toast("Resume submitted successfully!");
 		setIsAnalyzing(true);
 
-		const resume = await createResume(data);
+		const resume_text = await analyzeResume(data);
 
-		if (resume) {
+		if (resume_text) {
 			router.push("/scanner/result");
-			console.log("Resume created:", resume);
+			console.log("Resume analyzed:", resume_text);
 		} else {
-			console.log("Failed to create resume", resume);
+			console.log("Failed to analyze resume");
 			router.push("/");
 		}
 	};

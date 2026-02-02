@@ -6,6 +6,7 @@ const nextConfig: NextConfig = {
 			bodySizeLimit: "5mb", // Set the body size limit to 5MB
 		},
 	},
+	serverExternalPackages: ["pdf-parse"],
 	/* config options here */
 };
 

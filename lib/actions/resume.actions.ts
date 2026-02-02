@@ -3,20 +3,14 @@
 import { auth } from "@clerk/nextjs/server";
 import { createSupabaseClient } from "../supabase";
 import { randomUUID } from "crypto";
-import { supabaseAdmin } from "../supabase/admin";
+import { createSupabaseAdmin } from "../supabase/admin";
+import { convertPdfToText } from "../utils";
 
-export const uploadResumeToSupabase = async (file: File): Promise<string> => {
-	if (file.type !== "application/pdf") {
-		throw new Error(
-			"Only PDF files are allowed. Detected MIME type: " + file.type,
-		);
-	}
-
-	const { userId: author } = await auth();
-
-	const arrayBuffer = await file.arrayBuffer();
-	const buffer = Buffer.from(arrayBuffer);
-
+export const uploadResumeToSupabase = async (
+	buffer: Buffer,
+	author: string,
+): Promise<string> => {
+	const supabaseAdmin = createSupabaseAdmin();
 	const filePath = `resumes/${author}/${randomUUID()}.pdf`;
 
 	const { data, error } = await supabaseAdmin.storage
@@ -42,31 +36,42 @@ export const uploadResumeToSupabase = async (file: File): Promise<string> => {
 	return publicUrlData.publicUrl;
 };
 
-export const createResume = async (formData: CreateResume) => {
-	const { userId: author } = await auth();
+export const insertResume = async (
+	formData: CreateResume,
+	author: string,
+	publicUrl: string,
+) => {
 	const supabase = createSupabaseClient();
 
+	const { error } = await supabase.from("resumes").insert({
+		user_id: author,
+		job_title: formData.jobTitle,
+		company_name: formData.companyName,
+		job_description: formData.jobDescription,
+		resume: publicUrl,
+	});
+
+	if (error) {
+		throw new Error(`Failed to insert resume record: ${error.message}`);
+	}
+};
+
+export const analyzeResume = async (formData: CreateResume) => {
+	const { userId: author } = await auth();
 	const file = formData.resume as File;
 	if (!file) throw new Error("Resume PDF is required");
 
-	const publicUrl = await uploadResumeToSupabase(file);
-
-	const { data, error } = await supabase
-		.from("resumes")
-		.insert({
-			user_id: author,
-			job_title: formData.jobTitle,
-			company_name: formData.companyName,
-			job_description: formData.jobDescription,
-			resume: publicUrl,
-		})
-		.select();
-
-	if (error || !data) {
+	if (file.type !== "application/pdf") {
 		throw new Error(
-			`Failed to insert resume into database: ${error?.message || "No data returned"}`,
+			"Only PDF files are allowed. Detected MIME type: " + file.type,
 		);
 	}
+	const arrayBuffer = await file.arrayBuffer();
+	const buffer = Buffer.from(arrayBuffer);
 
-	return data[0];
+	const publicUrl = await uploadResumeToSupabase(buffer, author!);
+	insertResume(formData, author!, publicUrl);
+
+	const resume_text = convertPdfToText(publicUrl);
+	return resume_text;
 };
