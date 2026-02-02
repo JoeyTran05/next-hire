@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { generateAnalysis } from "@/services/resume-analyzer";
 import { MessagesSquare, Play } from "lucide-react";
 import Link from "next/link";
 import React from "react";
@@ -8,6 +9,12 @@ const card = [
 	{ label: "Duration", value: "~15 min" },
 	{ label: "Difficulty", value: "Medium" },
 ];
+
+generateAnalysis(
+	"Software Engineer",
+	"Develop and maintain web applications using modern frameworks.",
+	"Tech Corp",
+	"Experienced Software Engineer with a strong background in developing scalable web applications. Proficient in JavaScript, React, and Node.js. Skilled in collaborating with cross-functional teams to deliver high-quality software solutions. Adept at problem-solving and optimizing application performance.")
 
 const Practice = () => {
 	return (
