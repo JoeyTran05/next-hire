@@ -24,6 +24,10 @@ import { toast } from "sonner";
 import { Briefcase, Building2, FileSearchCorner, Upload } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
+import {
+	createResume,
+	uploadResumeToSupabase,
+} from "@/lib/actions/resume.actions";
 
 const formSchema = z.object({
 	jobTitle: z
@@ -60,16 +64,23 @@ const Scanner = () => {
 	const [isDragging, setIsDragging] = useState(false);
 	const [isAnalyzing, setIsAnalyzing] = useState(false);
 
-	function onSubmit(data: z.infer<typeof formSchema>) {
+	const onSubmit = async (data: z.infer<typeof formSchema>) => {
 		toast("Resume submitted successfully!");
 		setIsAnalyzing(true);
 
-		setTimeout(() => {
-			// Simulate analysis process
-			// setIsAnalyzing(false);
-			router.push("/scanner/result"); // Redirect to the result page
-		}, 3000); // Simulate a 3-second analysis delay
-	}
+		const resume = await createResume(data);
+
+		// const resumeUrl = await uploadResumeToSupabase(data.resume);
+		// console.log("Uploaded resume URL:", resumeUrl);
+
+		if (resume) {
+			// router.push("/scanner/result");
+			console.log("Resume created:", resume);
+		} else {
+			console.log("Failed to create resume", resume);
+			// router.push("/");
+		}
+	};
 
 	const handleDragOver = (e: React.DragEvent) => {
 		e.preventDefault();
@@ -93,7 +104,7 @@ const Scanner = () => {
 	const handleFileUpload = (onChange: (file: File) => void) => {
 		const input = document.createElement("input");
 		input.type = "file";
-		input.accept = ".pdf,.doc,.docx";
+		input.accept = ".pdf";
 		input.onchange = () => {
 			const file = input.files?.[0];
 			if (file) onChange(file);
@@ -325,7 +336,7 @@ const Scanner = () => {
 														here, or click to browse
 													</p>
 													<p className="text-sm text-gray-500">
-														PDF, DOC, DOCX • Max 5MB
+														PDF • Max 5MB
 													</p>
 
 													{field.value && (
