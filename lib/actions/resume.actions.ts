@@ -5,6 +5,7 @@ import { createSupabaseClient } from "../supabase";
 import { randomUUID } from "crypto";
 import { createSupabaseAdmin } from "../supabase/admin";
 import { convertPdfToText } from "../utils";
+import { generateAnalysis } from "./ai.actions";
 
 export const uploadResumeToSupabase = async (
 	buffer: Buffer,
@@ -72,6 +73,13 @@ export const analyzeResume = async (formData: CreateResume) => {
 	const publicUrl = await uploadResumeToSupabase(buffer, author!);
 	insertResume(formData, author!, publicUrl);
 
-	const resume_text = convertPdfToText(publicUrl);
-	return resume_text;
+	const resumeText = await convertPdfToText(publicUrl);
+	const resumeFeedback = await generateAnalysis(
+		formData.jobTitle,
+		formData.jobDescription,
+		formData.companyName,
+		resumeText,
+	);
+	console.log("Resume feedback:", resumeFeedback);
+	return resumeFeedback;
 };

@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { generateAnalysis } from "@/services/resume-analyzer";
+import { generateAnalysis } from "@/lib/actions/ai.actions";
 import { MessagesSquare, Play } from "lucide-react";
 import Link from "next/link";
 import React from "react";
