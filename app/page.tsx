@@ -25,45 +25,51 @@ const features = [
 		id: 1,
 		icon: Upload,
 		title: "Resume Scanner",
-		description: "Upload your PDF resume and get instant AI-powered feedbacks",
-		highlight: true
+		description:
+			"Upload your PDF resume and get instant AI-powered feedbacks",
+		highlight: true,
 	},
 	{
 		id: 2,
 		icon: PenTool,
 		title: "Resume Writing Help",
-		description: "Get professional guidance and tips to write an outstanding resume",
-		highlight: true
+		description:
+			"Get professional guidance and tips to write an outstanding resume",
+		highlight: true,
 	},
 	{
 		id: 3,
 		icon: Mic,
 		title: "Interview Practice",
-		description: "Practice your interview skills with AI-generated questions and feedback",
-		highlight: true
+		description:
+			"Practice your interview skills with AI-generated questions and feedback",
+		highlight: true,
 	},
 	{
 		id: 4,
 		icon: BookOpenText,
 		title: "100+ Resume Templates",
-		description: "Choose from a variety of modern and ATS-friendly resume templates",
-		highlight: false
+		description:
+			"Choose from a variety of modern and ATS-friendly resume templates",
+		highlight: false,
 	},
 	{
 		id: 5,
 		icon: BookOpenText,
 		title: "100+ Resume Templates",
-		description: "Choose from a variety of modern and ATS-friendly resume templates",
-		highlight: false
+		description:
+			"Choose from a variety of modern and ATS-friendly resume templates",
+		highlight: false,
 	},
 	{
 		id: 6,
 		icon: BookOpenText,
 		title: "100+ Resume Templates",
-		description: "Choose from a variety of modern and ATS-friendly resume templates",
-		highlight: false
-	}
-]
+		description:
+			"Choose from a variety of modern and ATS-friendly resume templates",
+		highlight: false,
+	},
+];
 
 const Home = () => {
 	return (
@@ -104,31 +110,32 @@ const Home = () => {
 						</div>
 					</div>
 
-					<div>
+					<Link href="/scanner">
 						<Button className="rounded-2xl border-3 border-white/40 bg-white/20 p-8 text-white backdrop-blur-sm text-2xl font-semibold">
 							Get Started
 						</Button>
-					</div>
+					</Link>
 				</div>
 
 				{/* Feature Cards Section */}
 				<h1 className="text-center text-4xl font-bold mt-15 animate-bounce">
 					Why NextHire?
 				</h1>
-				<p className="text-gray-600 text-center mt-4 text-xl">Tools designed to help you master every interview with AI</p>
+				<p className="text-gray-600 text-center mt-4 text-xl">
+					Tools designed to help you master every interview with AI
+				</p>
 
 				<div className="grid grid-cols-3 gap-8 mt-10 w-4/5 mx-auto">
-					{features.map(feature => (
-						<FeatureCard key={feature.id} 
-									 icon={feature.icon}
-									 title={feature.title}
-									 description={feature.description}
-									 highlight={feature.highlight}
-									  />
+					{features.map((feature) => (
+						<FeatureCard
+							key={feature.id}
+							icon={feature.icon}
+							title={feature.title}
+							description={feature.description}
+							highlight={feature.highlight}
+						/>
 					))}
-					
 				</div>
-
 
 				{/* User Reviews Section */}
 				<div className="mt-15 mb-7">

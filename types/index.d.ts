@@ -21,3 +21,8 @@ interface ResumeFeedbackParams {
 	}[];
 	resume_id: string;
 }
+
+interface RouteParams {
+	params: Promise<Record<string, string>>;
+	searchParams: Promise<Record<string, string>>;
+}
