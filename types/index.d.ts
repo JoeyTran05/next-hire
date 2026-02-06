@@ -5,6 +5,16 @@ interface CreateResume {
 	resume: File;
 }
 
+interface Resume {
+	id: string;
+	user_id: string;
+	job_title: string;
+	company_name: string;
+	job_description: string;
+	resume: string;
+	created_at: string;
+}
+
 interface ResumeFeedbackParams {
 	overall_score: number;
 	ats_score: number;
