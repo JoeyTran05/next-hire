@@ -9,6 +9,8 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
+import AIBadge from "./AIBadge";
+import MicTest from "./MicTest";
 
 interface StartInterviewFormProps {
 	resumeChosen: Resume;
@@ -47,15 +49,21 @@ const StartInterviewForm = ({
 			className="relative flex flex-col p-15 justify-between items-center text-center 
 						gap-4 w-full border border-gray-300 bg-white rounded-lg overflow-hidden"
 		>
-			<Button
-				className="absolute top-4 right-4 text-xs px-4 py-2 bg-gray-300 text-gray-900 
+			<div className="absolute top-4 right-4 flex gap-2">
+				<MicTest />
+				<Button
+					className=" text-xs px-4 py-2 bg-gray-300 text-gray-900 
 							hover:bg-gray-400 hover:cursor-pointer rounded-full font-semibold uppercase"
-				onClick={() => setResumeChosen(null)}
-			>
-				Select Resume Again
-			</Button>
+					onClick={() => setResumeChosen(null)}
+				>
+					Select Resume Again
+				</Button>
+			</div>
 			<MessagesSquare className="w-25 h-25" />
-			<h1>Welcome to Interview Practice</h1>
+			<div className="flex items-center">
+				<h1 className="mr-2 pb-1">Welcome to Interview Practice</h1>
+				<AIBadge />
+			</div>
 			<p>
 				Our AI interviewer will ask you common interview questions. Take
 				your time to answer, and you&apos;ll receive feedback on your

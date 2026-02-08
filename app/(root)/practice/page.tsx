@@ -2,10 +2,14 @@
 
 import SelectInterviewResume from "@/components/SelectInterviewResume";
 import StartInterviewForm from "@/components/StartInterviewForm";
-import React, { useState } from "react";
+import { RedirectToSignIn, useUser } from "@clerk/nextjs";
+import { useState } from "react";
 
 const Practice = () => {
 	const [resumeChosen, setResumeChosen] = useState<Resume | null>(null);
+	const { user } = useUser();
+
+	if (!user) return <RedirectToSignIn />;
 
 	if (!resumeChosen)
 		return (
