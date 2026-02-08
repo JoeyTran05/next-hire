@@ -3,8 +3,8 @@
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { Card, CardContent, CardTitle } from "@/components/ui/card";
-import { getResumesByUser } from "@/lib/actions/dashboard.actions";
 import { RedirectToSignIn, useUser } from "@clerk/nextjs";
+import { getResumesByUser } from "@/lib/actions/resume.actions";
 
 const Dashboard = () => {
 	const [resumes, setResumes] = useState([] as Resume[]);
