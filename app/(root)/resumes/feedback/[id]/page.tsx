@@ -5,11 +5,18 @@ import ResumeCategoryScore from "@/components/ResumeCategoryScore";
 import ResumeSectionAnalysis from "@/components/ResumeSectionAnalysis";
 import {
     FileText,
+    Briefcase,
     Target,
     Zap,
     BookOpen,
     Link2,
     CheckCircle,
+    Wrench,
+    FolderGit,
+    Box,
+    Boxes,
+    BoxesIcon,
+    LayoutGrid,
 } from "lucide-react";
 import {
     Accordion,
@@ -38,7 +45,7 @@ const ResumeFeedback = async ({ params }: RouteParams) => {
 
     if (feedbackData) {
         return (
-            <div className="mt-12 w-6/7 mx-auto px-6">
+            <div className="mt-12 w-6/7 mx-auto px-6 mb-10 ">
                 <div className="grid grid-cols-5 gap-30 items-start">
                     <div className="col-span-2 sticky top-8">
                         <div className="p-3 rounded-xl overflow-hidden bg-[#d1e3f6] shadow-[0_20px_40px_rgba(15,23,42,0.10)] h-172">
@@ -50,9 +57,9 @@ const ResumeFeedback = async ({ params }: RouteParams) => {
                     </div>
 
                     <div className="col-span-3 flex flex-col gap-6">
-                        <h1 className="text-3xl font-bold">Resume review</h1>
+                        <h1 className="text-4xl font-bold text-blue-500">Resume review</h1>
 
-                        <div className="bg-[#F1F5FB] px-8 py-6 rounded-2xl border-[#CDD7E6] shadow-[0_4px_12px_rgba(0,0,0,0.11)] border">
+                        <div className="bg-white/80 backdrop-blur-md px-8 py-6 rounded-3xl border-[#E0E7FF] shadow-[0_8px_24px_rgba(79,70,229,0.12)] border">
                             <div className="flex items-center gap-6 mb-6">
                                 <ScoreGauge
                                     score={feedbackData.overall_score}
@@ -97,17 +104,17 @@ const ResumeFeedback = async ({ params }: RouteParams) => {
                             </div>
                         </div>
 
-                        <div className="flex flex-col gap-4">
+                        <div className="flex flex-col gap-7">
                             <ResumeSectionAnalysis
                                 title={sectionsFeedback[0].name}
                                 score={sectionsFeedback[0].score}
-                                icon={FileText}
+                                icon={Briefcase}
                                 comment={sectionsFeedback[0].comment}
                             />
                             <ResumeSectionAnalysis
                                 title={sectionsFeedback[1].name}
                                 score={sectionsFeedback[1].score}
-                                icon={Target}
+                                icon={BookOpen}
                                 comment={sectionsFeedback[1].comment}
                             />
                             <ResumeSectionAnalysis
@@ -119,7 +126,7 @@ const ResumeFeedback = async ({ params }: RouteParams) => {
                             <ResumeSectionAnalysis
                                 title={sectionsFeedback[3].name}
                                 score={sectionsFeedback[3].score}
-                                icon={Zap}
+                                icon={Boxes}
                                 comment={sectionsFeedback[3].comment}
                             />
                         </div>

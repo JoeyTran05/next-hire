@@ -63,7 +63,7 @@ const ResumeSectionAnalysis = ({
         // </div>
         <Accordion type="single" collapsible>
             <AccordionItem value={title} className="border-none">
-                <div className="py-5 px-6 bg-[#F1F5FB] border-[#CDD7E6] shadow-[0_4px_12px_rgba(0,0,0,0.11)] border rounded-lg">
+                <div className="py-5 px-6 bg-gradient-to-r from-white to-pink-200/60 border-0 shadow-[0_10px_24px_rgba(6,182,212,0.2)] rounded-2xl">
                     {/* HEADER = Accordion Trigger */}
                     <AccordionTrigger className="p-0 hover:no-underline flex items-center justify-between">
                         <div className="flex items-center justify-between w-full">
@@ -72,7 +72,7 @@ const ResumeSectionAnalysis = ({
                                 <h4 className="text-2xl font-semibold">
                                     {title}
                                 </h4>
-                            </div>
+                            </div> 
 
                             <div className="flex items-center gap-1">
                                 <span
@@ -80,8 +80,8 @@ const ResumeSectionAnalysis = ({
                                 >
                                     {score}
                                 </span>
-                                <span className="text-gray-400 text-xl">
-                                    /100
+                                <span className="text-black text-xl">
+                                    / 100
                                 </span>
                             </div>
                         </div>
