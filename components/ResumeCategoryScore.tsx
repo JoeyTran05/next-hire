@@ -33,7 +33,7 @@ const ResumeCategoryScore = ({ title, score }: ResumeCategoryScoreProps) => {
     const badgeStyles = getBadgeStyles();
 
     return (
-        <div className="flex items-center justify-between py-4 px-6 bg-white rounded-lg">
+        <div className="flex items-center justify-between py-4 px-6 bg-sky-100 rounded-lg">
             <div className="flex items-center gap-4">
                 <h4 className="text-lg font-semibold">{title}</h4>
                 <span
@@ -46,7 +46,7 @@ const ResumeCategoryScore = ({ title, score }: ResumeCategoryScoreProps) => {
                 <span className={`text-xl font-bold ${getScoreColor()}`}>
                     {score}
                 </span>
-                <span className="text-xl">/100</span>
+                <span className="text-xl">/ 100</span>
             </div>
         </div>
     );
