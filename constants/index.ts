@@ -125,3 +125,102 @@ export const getInterviewQuestionPrompt = (
 				The questions are going to be read by a voice assistant, so don't use "/" or "*" or any other special characters which might break the voice assistant`;
 	return prompt;
 };
+
+
+export const interviewFeedbackSchema = z.object({
+    communication_clarity: z.object({
+        score: z.number(),
+        comment: z.string(),
+    }),
+
+    professional_language: z.object({
+        score: z.number(),
+        comment: z.string(),
+    }),
+
+    relevance_of_answers: z.object({
+        score: z.number(),
+        comment: z.string(),
+    }),
+
+    problem_solving: z.object({
+        score: z.number(),
+        comment: z.string(),
+    }),
+
+    experience_alignment: z.object({
+        score: z.number(),
+        comment: z.string(),
+    }),
+
+    confidence_presence: z.object({
+        score: z.number(),
+        comment: z.string(),
+    }),
+
+    technical_role_knowledge: z.object({
+        score: z.number(),
+        comment: z.string(),
+    }),
+
+    overall_performance: z.object({
+        score: z.number(),
+        comment: z.string(),
+    }),
+});
+
+
+export const interviewFeedbackPrompt = (
+    transcript: string,
+) => {
+    const prompt = `You are a professional interview evaluator providing structured, objective feedback on a candidate interview performance.
+
+                Below is the full interview transcript. The transcript contains alternating lines of interviewer questions and candidate answers, each labeled by role and separated by a colon (:).
+
+                INTERVIEW TRANSCRIPT:
+                ${transcript}
+
+                TASK:
+                You must analyze the candidate responses in relation to the questions asked and provide a structured evaluation with a numerical score (0–100) and concise justification for each category.
+
+                MARKING CATEGORIES:
+
+                1. Communication Clarity  
+                - Clarity of explanations  
+                - Logical structure of responses  
+                - Whether the candidate avoids rambling or confusion  
+
+                2. Professional Language & Vocabulary  
+                - Use of appropriate workplace terminology  
+                - Level of professionalism in word choice  
+                - Avoidance of slang or overly casual language  
+
+                3. Relevance of Answers  
+                - How directly responses address the questions asked  
+                - Whether the candidate stays on topic  
+                - Degree of specificity vs. generic answers  
+
+                4. Problem-Solving & Critical Thinking  
+                - Ability to reason through questions  
+                - Evidence of analytical thinking  
+                - Use of structured explanations when discussing challenges  
+
+                5. Experience Alignment  
+                - How well the candidate background aligns with the role  
+                - Quality and relevance of real examples provided  
+
+                6. Confidence & Presence  
+                - Perceived confidence in responses  
+                - Ability to handle challenging or unexpected questions  
+
+                7. Technical / Role-Specific Knowledge  
+                - Depth of knowledge related to the role  
+                - Accuracy of explanations and concepts  
+
+                8. Overall Interview Performance  
+                - Holistic assessment based on all previous categories  
+                - Overall suitability for the role  
+                - Key strengths and key weaknesses `;
+		
+    return prompt;
+};
