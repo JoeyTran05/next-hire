@@ -83,20 +83,18 @@ export const resumeFeedbackPrompt = (
 };
 
 export const interviewQuestionSchema = z.object({
-    interview_question: z.array(
-        z.object({
-            question: z.string(),
-        }),
-    ),
+    question_part1: z.array(z.string()),
+    question_part2: z.array(z.string()),
+    question_part3: z.array(z.string()),
 });
 
 export const interviewQuestionPrompt = (
     type: string,
     description: string,
     title: string,
-	difficulty: string,
+    difficulty: string,
     amount: number,
-	resumeText: string,
+    resumeText: string,
 ) => {
     const prompt = `Prepare questions for a job interview,
 				The job description is ${description}. 
@@ -107,7 +105,17 @@ export const interviewQuestionPrompt = (
 				${resumeText}
 
 				The difficulty level of the interview questions should be ${difficulty}.
-				Generate a total of ${amount} questions.
+                Questions should be created for each of the following sections: 
+                Part 1: Background & Experience
+                - General questions about the candidate background, education, and previous work experience.
+
+                Part 2: Role-Specific & Skill-Based Questions
+                - Questions related to the job role, technical skills, or responsibilities.
+
+                Part 3: Behavioral & Situational Questions
+                - Behavioral or scenario-based questions to understand how the candidate handles real-world situations
+
+				Generate a total of ${amount} questions, you can decide how many questions to generate for each section.
                 Please return only the questions, without any additional text or explanation.
 				The questions are going to be read by a voice assistant, so don't use "/" or "*" or any other special characters which might break the voice assistant`;
     return prompt;
