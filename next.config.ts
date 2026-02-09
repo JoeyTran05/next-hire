@@ -7,6 +7,9 @@ const nextConfig: NextConfig = {
 		},
 	},
 	serverExternalPackages: ["pdf-parse"],
+	images: {
+		remotePatterns: [{ hostname: "img.clerk.com" }],
+	},
 	/* config options here */
 };
 

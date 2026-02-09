@@ -146,3 +146,20 @@ export const getResumesByUser = async (
 	}
 	return data as Resume[];
 };
+
+export const getResumeById = async (
+	resumeID: string,
+): Promise<Resume | null> => {
+	const supabase = createSupabaseClient();
+	const { data, error } = await supabase
+		.from("resumes")
+		.select("*")
+		.eq("id", resumeID)
+		.single();
+
+	if (error) {
+		console.error("Error fetching resume data:", error);
+		return null;
+	}
+	return data as Resume;
+};

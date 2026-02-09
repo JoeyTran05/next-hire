@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Button } from "./ui/button";
-import { MessagesSquare, Play } from "lucide-react";
+import { Loader2, MessagesSquare, Play } from "lucide-react";
 import Link from "next/link";
 import {
 	Select,
@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/select";
 import AIBadge from "./AIBadge";
 import MicTest from "./MicTest";
+import { useRouter } from "next/navigation";
 
 interface StartInterviewFormProps {
 	resumeChosen: Resume;
@@ -24,6 +25,10 @@ const StartInterviewForm = ({
 	const [questions, setQuestions] = useState<number>(5);
 	const [difficulty, setDifficulty] = useState<string>("Medium");
 
+	const [isStarting, setIsStarting] = useState<boolean>(false);
+
+	const router = useRouter();
+
 	const calculateDuration = (numQuestions: number): string => {
 		// Assuming each question takes 3 minutes
 		return `~${numQuestions * 3} min`;
@@ -36,6 +41,14 @@ const StartInterviewForm = ({
 
 	const handleDifficultyChange = (value: string) => {
 		setDifficulty(value);
+	};
+
+	const startInterview = () => {
+		setIsStarting(true);
+
+		router.push(
+			`/practice/interview/${resumeChosen.id}?q=${questions}&d=${difficulty}`,
+		);
 	};
 
 	const card = [
@@ -99,9 +112,11 @@ const StartInterviewForm = ({
 							<SelectValue placeholder="Select number of questions" />
 						</SelectTrigger>
 						<SelectContent>
-							<SelectItem value="3">3</SelectItem>
-							<SelectItem value="4">4</SelectItem>
-							<SelectItem value="5">5</SelectItem>
+							{[2, 3, 4, 5, 6].map((num) => (
+								<SelectItem key={num} value={num.toString()}>
+									{num}
+								</SelectItem>
+							))}
 						</SelectContent>
 					</Select>
 				</div>
@@ -124,14 +139,23 @@ const StartInterviewForm = ({
 					</Select>
 				</div>
 			</div>
-			<Link
-				href={`/practice/interview/${resumeChosen.id}?q=${questions}&d=${difficulty}`}
+			<Button
+				className="bg-teal-600 hover:bg-teal-700 text-white px-5 py-7"
+				onClick={startInterview}
+				disabled={isStarting}
 			>
-				<div className="flex gap-2 bg-teal-600 hover:bg-teal-700 text-white justify-between items-center p-4 rounded-lg">
-					<Play className="w-6 h-6" />
-					<p className="text-xl font-medium">Start Interview</p>
-				</div>
-			</Link>
+				{isStarting ? (
+					<div className="flex items-center gap-2 justify-between rounded-lg">
+						<Loader2 className="animate-spin w-6 h-6" />
+						<p className="text-xl font-medium">Starting...</p>
+					</div>
+				) : (
+					<div className="flex gap-2 justify-between items-center rounded-lg">
+						<Play className="w-6 h-6" />
+						<p className="text-xl font-medium">Start Interview</p>
+					</div>
+				)}
+			</Button>
 		</div>
 	);
 };

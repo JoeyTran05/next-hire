@@ -225,3 +225,21 @@
 		line-height: 1.5;
 	}
 }
+
+@layer utilities {
+	.glow-pulse {
+		animation: pulse-glow 1.2s infinite;
+	}
+
+	@keyframes pulse-glow {
+		0% {
+			box-shadow: 0 0 0px rgba(255, 0, 0, 0.7);
+		}
+		50% {
+			box-shadow: 0 0 15px rgba(255, 0, 0, 1);
+		}
+		100% {
+			box-shadow: 0 0 0px rgba(255, 0, 0, 0.7);
+		}
+	}
+}

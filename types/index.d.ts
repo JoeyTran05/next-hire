@@ -36,3 +36,36 @@ interface RouteParams {
 	params: Promise<Record<string, string>>;
 	searchParams: Promise<Record<string, string>>;
 }
+
+interface InterviewSessionProps {
+	params: Promise<{ id: string }>;
+	searchParams: Promise<{ q: number; d: string }>;
+}
+
+interface InterviewSet {
+	jobTitle: string;
+	companyName: string;
+	interviewQuestions: {
+		questions_part1: string[];
+		questions_part2: string[];
+		questions_part3: string[];
+	};
+}
+
+interface InterviewVapiModelProps {
+	userId: string;
+	userName: string;
+	userImage: string;
+	questions: {
+		questions_part1: string[];
+		questions_part2: string[];
+		questions_part3: string[];
+	};
+	jobTitle: string;
+	companyName;
+}
+
+interface SavedMessage {
+	role: "user" | "system" | "assistant";
+	content: string;
+}

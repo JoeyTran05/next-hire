@@ -1,6 +1,11 @@
 "use server";
 
-import { interviewQuestionPrompt, interviewQuestionSchema, resumeFeedbackPrompt, resumeFeedbackSchema } from "@/constants/index";
+import {
+	getInterviewQuestionPrompt,
+	getResumeFeedbackPrompt,
+	interviewQuestionSchema,
+	resumeFeedbackSchema,
+} from "@/constants/index";
 import { google } from "@ai-sdk/google";
 import { generateText, Output } from "ai";
 
@@ -16,7 +21,7 @@ export const generateAnalysis = async (
 
 			output: Output.object({ schema: resumeFeedbackSchema }),
 
-			prompt: resumeFeedbackPrompt(
+			prompt: getResumeFeedbackPrompt(
 				jobTitle,
 				jobDescription,
 				companyName,
@@ -31,13 +36,12 @@ export const generateAnalysis = async (
 	}
 };
 
-
-export const generateInterviewQuestions = async (
+export const generateQuestionsFromText = async (
 	type: string,
-	description: string,
 	title: string,
-	difficulty: string,
+	description: string,
 	amount: number,
+	difficulty: string,
 	resumeText: string,
 ) => {
 	try {
@@ -46,12 +50,12 @@ export const generateInterviewQuestions = async (
 
 			output: Output.object({ schema: interviewQuestionSchema }),
 
-			prompt: interviewQuestionPrompt(
+			prompt: getInterviewQuestionPrompt(
 				type,
-				description,
 				title,
-				difficulty,
+				description,
 				amount,
+				difficulty,
 				resumeText,
 			),
 		});
