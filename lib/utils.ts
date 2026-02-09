@@ -59,6 +59,9 @@ export const configureAssistant = (voice: string, style: string) => {
 
 					Interview Guidelines:
 					Follow a structured interview flow:
+					- Only ask the questions that are given to you and do not create any other questions.
+					- Do not ask any follow-up questions, just follow the questions you are given for each part.
+					- Just ask the question do not say move on to question part 2 or 3.
 
 					Interview Structure:
 					Introduction:

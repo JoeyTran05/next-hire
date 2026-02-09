@@ -148,21 +148,21 @@ const InterviewVapiModel = ({
 			formattedQuestionsPart1 = questions.questions_part1
 				.map((question) => `- ${question}`)
 				.join("\n");
-			formattedQuestionsPart2 = questions.questions_part1
+			formattedQuestionsPart2 = questions.questions_part2
 				.map((question) => `- ${question}`)
 				.join("\n");
-			formattedQuestionsPart3 = questions.questions_part1
+			formattedQuestionsPart3 = questions.questions_part3
 				.map((question) => `- ${question}`)
 				.join("\n");
 		}
 
 		const assistantOverrides = {
 			variableValues: {
+				job_title: jobTitle,
+				company_name: companyName,
 				questions_part1: formattedQuestionsPart1,
 				questions_part2: formattedQuestionsPart2,
 				questions_part3: formattedQuestionsPart3,
-				job_title: jobTitle,
-				company_name: companyName,
 			},
 			clientMessages: ["transcript"],
 			serverMessages: [],
