@@ -8,7 +8,8 @@ import { cn, configureAssistant } from "@/lib/utils";
 import soundwaves from "@/constants/soundwaves.json";
 import loadingSpinner from "@/constants/loading.json";
 import { toast } from "sonner";
-import { useRouter } from "next/router";
+import { insertInterviewFeedback } from "@/lib/actions/feedback.actions";
+import { useRouter } from "next/navigation";
 
 enum CallStatus {
 	INACTIVE = "INACTIVE",
@@ -24,6 +25,7 @@ const InterviewVapiModel = ({
 	questions,
 	jobTitle,
 	companyName,
+	resumeId,
 }: InterviewVapiModelProps) => {
 	const [callStatus, setCallStatus] = useState<CallStatus>(
 		CallStatus.INACTIVE,
@@ -37,7 +39,7 @@ const InterviewVapiModel = ({
 
 	const lottieRef = useRef<LottieRefCurrentProps>(null);
 
-	// const router = useRouter();
+	const router = useRouter();
 
 	useEffect(() => {
 		if (lottieRef) {
@@ -105,19 +107,18 @@ const InterviewVapiModel = ({
 	const handleGenerateFeedback = async (messsages: SavedMessage[]) => {
 		console.log("Generate feedback with messages:", messsages);
 
-		// const { success, feedbackId: id } = await createInterviewFeedback({
-		// 	userId: userId,
-		// 	resumeId: id,
-		// 	transcript: messsages,
-		// });
-
-		// if (success && id) {
-		// 	router.push(`/practice/interview/${id}/feedback`);
-		// } else {
-		// 	console.log("Failed to generate feedback");
-		// 	router.push("/take-tests/speaking");
-		// 	toast("Failed to generate feedback");
-		// }
+		const { success, feedbackId: id } = await insertInterviewFeedback({
+			userId,
+			resumeId,
+			transcript: messsages,
+		});
+		if (success && id) {
+			router.push(`/practice/interview/${id}/feedback`);
+		} else {
+			console.log("Failed to generate feedback");
+			router.push("/practice");
+			toast("Failed to generate feedback");
+		}
 	};
 
 	useEffect(() => {

@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { Button } from "./ui/button";
 import { Loader2, MessagesSquare, Play } from "lucide-react";
-import Link from "next/link";
 import {
 	Select,
 	SelectContent,

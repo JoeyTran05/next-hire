@@ -7,7 +7,7 @@ import Image from "next/image";
 const InterviewSession = async ({
 	params,
 	searchParams,
-}: InterviewSessionProps) => {
+}: InterviewSessionParams) => {
 	const user = await currentUser();
 	const { id } = await params;
 	// fetch amount of questions and difficulty
@@ -57,6 +57,7 @@ const InterviewSession = async ({
 				questions={interviewQuestions}
 				jobTitle={jobTitle}
 				companyName={companyName}
+				resumeId={id}
 			/>
 		</main>
 	);

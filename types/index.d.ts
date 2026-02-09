@@ -37,7 +37,7 @@ interface RouteParams {
 	searchParams: Promise<Record<string, string>>;
 }
 
-interface InterviewSessionProps {
+interface InterviewSessionParams {
 	params: Promise<{ id: string }>;
 	searchParams: Promise<{ q: number; d: string }>;
 }
@@ -62,10 +62,35 @@ interface InterviewVapiModelProps {
 		questions_part3: string[];
 	};
 	jobTitle: string;
-	companyName;
+	companyName: string;
+	resumeId: string;
 }
 
 interface SavedMessage {
 	role: "user" | "system" | "assistant";
 	content: string;
+}
+
+interface InterviewFeedbackSchema {
+	overall_score: number;
+	strengths: string;
+	areas_for_improvement: string;
+	category_feedback: {
+		name:
+			| "Communication Clarity"
+			| "Professional Language"
+			| "Relevance of Answers"
+			| "Problem Solving"
+			| "Experience Alignment"
+			| "Confidence Presence"
+			| "Technical Role Knowledge";
+		score: number;
+		comment: string;
+	}[];
+}
+
+interface InsertInterviewFeedbackParams {
+	userId: string;
+	resumeId: string;
+	transcript: { role: string; content: string }[];
 }
